@@ -19,13 +19,10 @@ ecoreg <- "BI"
 mkdir("report")
 
 # set values for automatic naming of files:
-<<<<<<< HEAD
+
 year_cap = "2021"
 ecoreg = "BI"
-=======
-# year_cap = "2020"
-# ecoreg = "BI"
->>>>>>> 126b60a802391bcf894b3d1a86a1ca3e3a43ffdf
+
 
 ##########
 #Load data
