@@ -10,8 +10,8 @@ library(dplyr)
 source("bootstrap/utilities.r")
 
 # set values for automatic naming of files:
-cap_year <- 2021
-cap_month <- "November"
+cap_year <- 2022
+cap_month <- "October"
 ecoreg_code <- "BI"
 ecoreg <- "BI"
 
@@ -26,17 +26,9 @@ catch_trends <- read.taf("model/catch_trends.csv")
 
 clean_status <- read.taf("data/clean_status.csv")
 
-#set year and month for captions:
-<<<<<<< HEAD
-cap_month = "November"
-cap_year = "2021"
-=======
-# cap_month = "November"
-# cap_year = "2020"
->>>>>>> 126b60a802391bcf894b3d1a86a1ca3e3a43ffdf
 # set year for plot calculations
 
-year = 2021
+year = 2022
 
 
 ###########
@@ -68,6 +60,9 @@ write.taf(dat, file =file_name(cap_year,ecoreg_code,"SAG_Trends_demersal", ext =
 # 3. Pelagic
 #~~~~~~~~~~~
 plot_stock_trends(trends, guild="pelagic", cap_year, cap_month , return_data = FALSE)
+trends2 <- trends %>% filter(StockKeyLabel != "bsf.27.nea")
+trends2 <- trends2 %>% filter(StockKeyLabel != "ane.27.9a")
+plot_stock_trends(trends2, guild="pelagic", cap_year, cap_month , return_data = FALSE)
 ggplot2::ggsave(file_name(cap_year,ecoreg_code,"SAG_Trends_pelagic", ext = "png"), path = "report/", width = 178, height = 130, units = "mm", dpi = 300)
 
 dat <- plot_stock_trends(trends, guild="pelagic", cap_year, cap_month, return_data = TRUE)
@@ -133,7 +128,7 @@ write.taf(dat, file =paste0(year_cap, "_", ecoreg, "_EO_SAG_SpeciesGuildList.csv
 
 bar <- plot_CLD_bar(catch_current, guild = "demersal", caption = TRUE, cap_year, cap_month, return_data = FALSE)
 catch_current <- catch_current %>% filter(StockKeyLabel != "ele.2737.nea")
-catch_current$Status[which(catch_current$StockKeyLabel == "hke.27.3a46-8abd")] <- "GREEN"
+# catch_current$Status[which(catch_current$StockKeyLabel == "hke.27.3a46-8abd")] <- "GREEN"
 # catch_current <- catch_current %>% filter(StockKeyLabel != "pol.27.67")
 bar <- plot_CLD_bar(catch_current, guild = "demersal", caption = TRUE, cap_year, cap_month, return_data = FALSE)
 bar_dat <- plot_CLD_bar(catch_current, guild = "demersal", caption = TRUE, cap_year , cap_month , return_data = TRUE)
@@ -186,11 +181,8 @@ write.taf(bar_dat, file =file_name(cap_year,ecoreg_code,"SAG_Current_crustacean"
 
 kobe <- plot_kobe(catch_current, guild = "crustacean", caption = TRUE, cap_year , cap_month , return_data = FALSE)
 #check this file name
-<<<<<<< HEAD
-png("report/2021_BI_FO_SAG_Current_crustacean.png",
-=======
+
 png(file_name(cap_year,ecoreg_code,"SAG_Current_crustacean", ext = "png"),
->>>>>>> 126b60a802391bcf894b3d1a86a1ca3e3a43ffdf
     width = 131.32,
     height = 88.9,
     units = "mm",
@@ -241,7 +233,7 @@ png(file_name(cap_year,ecoreg_code,"SAG_Current_All", ext = "png"),
     res = 300)
 p1_plot<-gridExtra::grid.arrange(kobe,
                                  bar, ncol = 2,
-                                 respect = TRUE, top = "All stocks")
+                                 respect = TRUE, top = "All stocks top 10")
 dev.off()
 
 
@@ -305,7 +297,8 @@ dat <- format_annex_table(clean_status, year)
 
 write.taf(dat, file = file_name(cap_year,ecoreg_code,"SAG_annex_table", ext = "csv"), dir = "report", quote=TRUE)
 
-html_annex_table(dat, cap_year, ecoreg_code)
+dat2 <- dat[-(1:100),]
+format_annex_table_html(dat2, cap_year, ecoreg_code)
 # This annex table has to be edited by hand,
 # For SBL and GES only one values is reported,
 # the one in PA for SBL and the one in MSY for GES

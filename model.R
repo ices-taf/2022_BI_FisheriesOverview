@@ -7,8 +7,8 @@ library(dplyr)
 library(icesFO)
 
 mkdir("model")
-clean_sag$MSYBtrigger[which(clean_sag$StockKeyLabel == "ank.27.78abd")] <- "1"
-clean_sag$FMSY[which(clean_sag$StockKeyLabel == "ank.27.78abd")] <- "1"
+# clean_sag$MSYBtrigger[which(clean_sag$StockKeyLabel == "ank.27.78abd")] <- "1"
+# clean_sag$FMSY[which(clean_sag$StockKeyLabel == "ank.27.78abd")] <- "1"
 
 #A. Trends by guild
 
