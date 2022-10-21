@@ -19,7 +19,7 @@ prelim <- read.taf("bootstrap/data/ICES_nominal_catches/ICES_preliminary_catches
 
 catch_dat <-
   format_catches(2022, "Bay of Biscay and the Iberian Coast",
-    hist, official, prelim, species_list, sid)
+    hist, official, NULL, species_list, sid)
 
 write.taf(catch_dat, dir = "data", quote = TRUE)
 
@@ -39,11 +39,11 @@ write.taf(clean_status, dir = "data", quote = TRUE)
 
 # 3: STECF effort and landings
 
-effort <- read.taf("bootstrap/initial/data/FDI effort by country.csv", check.names = TRUE)
-names(effort)
-effort$Sub.region <- tolower(effort$Sub.region)
-unique(effort$Sub.region)
-effort_BI <- dplyr::filter(effort, grepl("27.8.a|27.8.b|27.8.c|27.8.d|27.8.e|
+# effort <- read.taf("bootstrap/initial/data/FDI effort by country.csv", check.names = TRUE)
+# names(effort)
+# effort$Sub.region <- tolower(effort$Sub.region)
+# unique(effort$Sub.region)
+# effort_BI <- dplyr::filter(effort, grepl("27.8.a|27.8.b|27.8.c|27.8.d|27.8.e|
                                           27.9.a|27.9.b", Sub.region))
 
 landings1 <- read.taf("bootstrap/initial/data/Landings_2014.csv", check.names = TRUE)

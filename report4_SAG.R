@@ -153,12 +153,16 @@ dev.off()
 #~~~~~~~~~~~
 bar <- plot_CLD_bar(catch_current, guild = "pelagic", caption = TRUE, cap_year, cap_month , return_data = FALSE)
 catch_current <- catch_current %>% filter(StockKeyLabel != "ane.27.9a")
+catch_current$Status[which(catch_current$StockKeyLabel == "pil.27.8c9a")] <- "GREY"
+catch_current$Status[which(catch_current$StockKeyLabel == "pil.27.8abd")] <- "GREY"
 bar <- plot_CLD_bar(catch_current, guild = "pelagic", caption = TRUE, cap_year, cap_month , return_data = FALSE)
 bar_dat <- plot_CLD_bar(catch_current, guild = "pelagic", caption = TRUE, cap_year , cap_month , return_data = TRUE)
 write.taf(bar_dat, file =file_name(cap_year,ecoreg_code,"SAG_Current_pelagic", ext = "csv"), dir = "report")
 
 catch_current <- unique(catch_current)
-kobe <- plot_kobe(catch_current, guild = "pelagic", caption = TRUE, cap_year , cap_month , return_data = FALSE)
+catch_current2 <- catch_current %>% filter(StockKeyLabel != "pil.27.8c9a")
+catch_current2 <- catch_current2 %>% filter(StockKeyLabel != "pil.27.8abd")
+kobe <- plot_kobe(catch_current2, guild = "pelagic", caption = TRUE, cap_year , cap_month , return_data = FALSE)
 #check this file name
 png(file_name(cap_year,ecoreg_code,"SAG_Current_pelagic", ext = "png"),
     width = 131.32,
@@ -224,7 +228,9 @@ write.taf(bar_dat, file =file_name(cap_year,ecoreg_code,"SAG_Current_All", ext =
 top_10 <- bar_dat %>% top_n(10, total)
 bar <- plot_CLD_bar(top_10, guild = "All", caption = TRUE, cap_year , cap_month , return_data = FALSE)
 
-kobe <- plot_kobe(top_10, guild = "All", caption = TRUE, cap_year, cap_month , return_data = FALSE)
+top_102 <- top_10 %>% filter(StockKeyLabel != "pil.27.8c9a")
+top_102 <- top_102 %>% filter(StockKeyLabel != "pil.27.8abd")
+kobe <- plot_kobe(top_102, guild = "All", caption = TRUE, cap_year, cap_month , return_data = FALSE)
 #check this file name
 png(file_name(cap_year,ecoreg_code,"SAG_Current_All", ext = "png"),
     width = 131.32,
@@ -240,15 +246,33 @@ dev.off()
 #~~~~~~~~~~~~~~~#
 # C. Discards
 #~~~~~~~~~~~~~~~#
-discardsA <- plot_discard_trends(catch_trends, year, cap_year, cap_month )
-catch_trends2 <- catch_trends %>% filter(FisheriesGuild != "elasmobranch")
-discardsA <- plot_discard_trends(catch_trends2, year, cap_year, cap_month )
+catch_trends <- unique(catch_trends)
+catch_trends$ID <- paste0(catch_trends$Year,catch_trends$StockKeyLabel,catch_trends$FisheriesGuild)
+check <- catch_trends %>% arrange(rowSums(is.na(.))) %>% distinct(ID, .keep_all = TRUE)
+catch_trends2 <- check
 
-catch_trends3 <- catch_trends2 %>% filter(discards > 0)
-discardsB <- plot_discard_current(catch_trends3, year,position_letter = "b)", cap_year , cap_month , caption = FALSE)
+
+discardsA <- plot_discard_trends(catch_trends2, year, cap_year, cap_month )
+catch_trends3 <- catch_trends2 %>% filter(FisheriesGuild != "elasmobranch")
+discardsA <- plot_discard_trends(catch_trends3, year, cap_year, cap_month )
+
+catch_trends3 <- catch_trends2 %>% filter(Discards > 0)
+# catch_trends4 <- unique(catch_trends4)
+# catch_trends3$ID <- paste0(catch_trends3$Year,catch_trends3$StockKeyLabel,catch_trends3$FisheriesGuild)
+# check <- catch_trends3 %>% arrange(rowSums(is.na(.))) %>% distinct(ID, .keep_all = TRUE)
+# check <- check[, -11]
+df5 <- catch_trends3
+discardsB <- plot
+
+# discardsB <- plot_discard_current(catch_trends3, year,position_letter = "b)", cap_year , cap_month , caption = FALSE)
 # nothing comes out here, because no spurdog assessment
 
-discardsC <- plot_discard_current(catch_trends2, year,position_letter = "c)", cap_year , cap_month, caption = TRUE )
+# catch_trends2$ID <- paste0(catch_trends2$Year,catch_trends2$StockKeyLabel,catch_trends2$FisheriesGuild)
+# check <- catch_trends2 %>% arrange(rowSums(is.na(.))) %>% distinct(ID, .keep_all = TRUE)
+# check <- check[, -11]
+df5 <- catch_trends2
+discardsC <- plot
+# discardsC <- plot_discard_current(catch_trends2, year,position_letter = "c)", cap_year , cap_month, caption = TRUE )
 
 #Need to change order?
 dat <- plot_discard_current(catch_trends, year, cap_year, cap_month , return_data = TRUE)
@@ -266,6 +290,7 @@ plot_status_prop_pies(clean_status, cap_month, cap_year)
 
 unique(clean_status$StockSize)
 clean_status$StockSize <- gsub("qual_RED", "RED", clean_status$StockSize)
+clean_status$StockSize <- gsub("ORANGE", "GREY", clean_status$StockSize)
 
 unique(clean_status$FishingPressure)
 # clean_status$FishingPressure <- gsub("qual_GREEN", "GREEN", clean_status$FishingPressure)
