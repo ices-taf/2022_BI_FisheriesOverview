@@ -198,7 +198,7 @@ dev.off()
 
 # 4. benthic
 #~~~~~~~~~~~
-# catch_current$Status[which(catch_current$StockKeyLabel == "sol.27.20-24")] <- "GREEN"
+catch_current$FisheriesGuild[which(catch_current$StockKeyLabel == "mon.27.78abd")] <- "benthic"
 
 bar <- plot_CLD_bar(catch_current, guild = "benthic", caption = TRUE, cap_year , cap_month , return_data = FALSE)
 
