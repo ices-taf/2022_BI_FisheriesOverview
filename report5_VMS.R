@@ -60,7 +60,8 @@ effort <-
             Beam = "Beam trawls"),
           mw_fishinghours = as.numeric(mw_fishinghours)
         ) %>%
-      filter(!is.na(mw_fishinghours))
+      filter(!is.na(mw_fishinghours)) %>% 
+      filter(mw_fishinghours != 0)
 
 # write layer
 write_layer <- function(dat, fname) {
@@ -76,7 +77,7 @@ write_layer(effort, paste0(cap_year, "_", ecoreg,"_FO_VMS_effort"))
 plot_effort_map(effort, ecoregion) +
   ggtitle(paste0("Average MW Fishing hours ", year_range))
 
-ggplot2::ggsave(file_name(cap_year,ecoreg_code,"VMS_effort", ext = "png", dir = "report"), width = 170, height = 200, units = "mm", dpi = 300)
+ggplot2::ggsave(file_name(cap_year,ecoreg_code,"VMS_effort_updated", ext = "png", dir = "report"), width = 170, height = 200, units = "mm", dpi = 300)
 
 #~~~~~~~~~~~~~~~#
 # A. Swept area map

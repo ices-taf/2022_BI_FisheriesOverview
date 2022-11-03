@@ -12,7 +12,7 @@ out <- rbind(out, ank)
 
 sag_complete <- out
 
-write.taf(out, file = "SAG_complete_BtS.csv", quote = TRUE)
+write.taf(out, file = "SAG_complete_BI.csv", quote = TRUE)
 
 
 status <- load_sag_status(2022)

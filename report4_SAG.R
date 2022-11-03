@@ -69,7 +69,7 @@ trends <- trends[!(trends$StockKeyLabel == "whb.27.1-91214" & trends$Metric == "
                 !(trends$StockKeyLabel == "whb.27.1-91214" & trends$Metric == "SSB_MSYBtrigger" & trends$Year == 2023) &
                 !(trends$StockKeyLabel == "MEAN" & trends$Metric == "SSB_MSYBtrigger" & trends$Year == 2023),]
 
-
+trends <- trends %>% filter(StockKeyLabel != "ane.27.9a") %>% filter(StockKeyLabel != "bsf.27.nea")
 
 plot_stock_trends(trends, guild="pelagic", cap_year, cap_month , return_data = FALSE)
 ggplot2::ggsave(file_name(cap_year,ecoreg_code,"SAG_Trends_pelagic", ext = "png", dir = "report"), width = 178, height = 130, units = "mm", dpi = 300)
