@@ -39,7 +39,7 @@ clean_sag <- format_sag(sag_complete, sid)
 clean_sag <- unique(clean_sag)
 clean_status <- format_sag_status(status, 2022, "Biscay")
 
-write.taf(clean_sag, dir = "data")
+write.taf(clean_sag, dir = "data", quote = TRUE)
 write.taf(clean_status, dir = "data", quote = TRUE)
 
 # 3: STECF effort and landings
@@ -49,7 +49,7 @@ write.taf(clean_status, dir = "data", quote = TRUE)
 # effort$Sub.region <- tolower(effort$Sub.region)
 # unique(effort$Sub.region)
 # effort_BI <- dplyr::filter(effort, grepl("27.8.a|27.8.b|27.8.c|27.8.d|27.8.e|
-                                          27.9.a|27.9.b", Sub.region))
+                                          # 27.9.a|27.9.b", Sub.region))
 
 landings1 <- read.taf("bootstrap/initial/data/Landings_2014.csv", check.names = TRUE)
 landings2 <- read.taf("bootstrap/initial/data/Landings_2015.csv", check.names = TRUE)
