@@ -30,9 +30,9 @@ sag_refpts <- read.taf("bootstrap/data/SAG_data/SAG_refpts.csv")
 sag_status <- read.taf("bootstrap/data/SAG_data/SAG_status.csv")
 
 
-#DGS has a custom ref point for F but we should not plot the SSB one instead
+#DGS has a custom ref point for F 
 sag_complete$FMSY[which(sag_complete$FishStock == "dgs.27.nea")] <- 0.0429543
-sag_complete$MSYBtrigger[which(sag_complete$FishStock == "dgs.27.nea")] <- NA
+sag_complete$MSYBtrigger[which(sag_complete$FishStock == "dgs.27.nea")] <- 336796
 
 
 clean_sag <- format_sag(sag_complete, sid)

@@ -301,7 +301,9 @@ plot_status_prop_pies(clean_status, cap_month, cap_year)
 ggplot2::ggsave(file_name(cap_year,ecoreg_code,"SAG_ICESpies", ext = "png"), path= "report/", width = 178, height = 178, units = "mm", dpi = 300)
 
 dat <- plot_status_prop_pies(clean_status, cap_month, cap_year, return_data = TRUE)
-write.taf(dat, file= file_name(cap_year,ecoreg_code,"SAG_ICESpies", ext = "csv"),dir ="report")
+# write.taf(dat, file= file_name(cap_year,ecoreg_code,"SAG_ICESpies", ext = "csv"),dir ="report")
+write.csv(dat, file = "2022_BI_FO_SAG_ICESpies.csv")
+
 
 #~~~~~~~~~~~~~~~#
 #E. GES pies
