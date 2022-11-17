@@ -33,6 +33,7 @@ sag_status <- read.taf("bootstrap/data/SAG_data/SAG_status.csv")
 #DGS has a custom ref point for F 
 sag_complete$FMSY[which(sag_complete$FishStock == "dgs.27.nea")] <- 0.0429543
 sag_complete$MSYBtrigger[which(sag_complete$FishStock == "dgs.27.nea")] <- 336796
+sag_complete$StockSize[which(sag_complete$FishStock == "dgs.27.nea")] <- sag_complete$TBiomass[which(sag_complete$FishStock == "dgs.27.nea")]
 
 
 clean_sag <- format_sag(sag_complete, sid)
